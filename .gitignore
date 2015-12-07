@@ -11,3 +11,5 @@ hs_err_pid*
 
 #Exclude the document Example
 /Example
+
+MASMA.sublime-project*
