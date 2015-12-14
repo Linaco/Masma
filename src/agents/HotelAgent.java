@@ -1,5 +1,6 @@
 /*
- * Personnal Agent
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
  */
 package agents;
 
@@ -22,17 +23,10 @@ import util.AgentFrame;
 import util.Products;
 import util.YellowPages;
 
-public class PersonnalAgent extends Agent {
+public class HotelAgent extends Agent {
 
 	public AgentFrame windowsForm;
 	public AID providerAID = null;
-
-	public static int randInt(int min, int max) {
-
-		Random rand = new Random();
-		int randomNum = rand.nextInt((max - min) + 1) + min;
-		return randomNum;
-	}
 
 	@Override
 	public void setup() {
