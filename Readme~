@@ -1,0 +1,15 @@
+-> Simple
+
+-> Gestion des disponibilités
+
+-> Dates flexibles
+
+-> number of rooms / number of people per room
+
+
+Search : Hotel -> Transport -> Activities
+
+Argument : 	Iasi	25.12.2015-02.01.2015	false/true	2	3	2	1000-2000	plane/train/false
+		City	Date			Flexible	NbrRms	NbrPpl	NbrSta	Price range	Transport
+
+
