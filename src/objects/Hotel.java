@@ -1,7 +1,12 @@
+package objects;
+
 import java.util.*;
 import java.text.*;
 
 public class Hotel(){
+
+	public static map;
+
 	public String name;
 	public String city;
 	public Date dateBegin;
@@ -28,6 +33,9 @@ public class Hotel(){
 		this.numberOfRooms = numberOfRooms;
 		this.numberOfBeds = numberOfBeds;
 		this.range = range;
+
+		//Add it to the static map of Hotel
+		map.add(this);
 
 	}
 }
