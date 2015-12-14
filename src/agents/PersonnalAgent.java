@@ -27,13 +27,6 @@ public class PersonnalAgent extends Agent {
 	public AgentFrame windowsForm;
 	public AID providerAID = null;
 
-	public static int randInt(int min, int max) {
-
-		Random rand = new Random();
-		int randomNum = rand.nextInt((max - min) + 1) + min;
-		return randomNum;
-	}
-
 	@Override
 	public void setup() {
 		Object[] args = this.getArguments();
