@@ -43,11 +43,11 @@ public class MASInit {
 		//Personnal agent
 		jade.wrapper.AgentController managerAg = CreateAgent(mainContainer, "AgentManager", "agents.AuctionAgentManager", new Object[] { AgentManagerForm });
 		//Hotel
-		jade.wrapper.AgentController ag1 = CreateAgent(mainContainer, "Buyer1", "agents.BuyerAgent", new Object[] { agent1Form });
+		jade.wrapper.AgentController ag1 = CreateAgent(mainContainer, "Hotel", "agents.BuyerAgent", new Object[] { agent1Form });
 		//Transport
-		jade.wrapper.AgentController ag2 = CreateAgent(mainContainer, "Buyer2", "agents.BuyerAgent", new Object[] { agent2Form });
+		jade.wrapper.AgentController ag2 = CreateAgent(mainContainer, "Transport", "agents.BuyerAgent", new Object[] { agent2Form });
 		//Activities
-		jade.wrapper.AgentController ag3 = CreateAgent(mainContainer, "Buyer3", "agents.BuyerAgent", new Object[] { agent3Form });
+		jade.wrapper.AgentController ag3 = CreateAgent(mainContainer, "Activities", "agents.BuyerAgent", new Object[] { agent3Form });
 
 		managerAg.start();
 		Thread.sleep(10);

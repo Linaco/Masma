@@ -2,16 +2,20 @@
 
 .mtj.tmp/
 
-src/MASMA.*
+/src/MASMA.*
 
 #Package Files #
 *.jar
 *.war
 *.ear
 
+*~
+
+!jade.jar
+
 hs_err_pid*
 
 #Exclude the document Example
 /Example
 
-MASMA.sublime-project*
+MASMA.sublime-*
