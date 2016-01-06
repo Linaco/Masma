@@ -9,6 +9,8 @@
 *.war
 *.ear
 
+*~
+
 !jade.jar
 
 hs_err_pid*

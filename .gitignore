@@ -17,5 +17,7 @@ hs_err_pid*
 
 #Exclude the document Example
 /Example
+/Papers
 
 MASMA.sublime-*
+/bin/

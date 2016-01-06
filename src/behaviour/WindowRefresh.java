@@ -1,12 +1,14 @@
-package AgentProtocol;
+package behaviour;
 
+import agents.WorkingAgent;
+import jade.core.Agent;
 import jade.core.behaviours.TickerBehaviour;
 
-public class InitiatorWindowRefresh extends TickerBehaviour {
+public class WindowRefresh extends TickerBehaviour {
 
-    private InitiatorAgent myAgent;
+    private WorkingAgent myAgent;
 
-    public InitiatorWindowRefresh(InitiatorAgent a, long period) {
+    public WindowRefresh(WorkingAgent a, long period) {
         super(a, period);
         myAgent = a;
     }

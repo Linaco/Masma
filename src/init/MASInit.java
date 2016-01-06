@@ -6,7 +6,7 @@ package init;
 
 /**
  *
- * @author lab
+ * @author Linaco
  */
 import jade.core.Profile;
 import jade.core.ProfileImpl;
@@ -20,7 +20,7 @@ import util.AgentFrame;
 public class MASInit {
 	public static void DoInitialization() throws ControllerException, InterruptedException {
 		// create main container
-		jade.wrapper.AgentContainer mainContainer = CreateContainer("TripCompany", true, "localhost", "", "1090");
+		jade.wrapper.AgentContainer mainContainer = CreateContainer("TripCompany", true, "localhost", "", "1099");
 		mainContainer.start();
 
 		//Import data
@@ -30,30 +30,12 @@ public class MASInit {
 		AgentFrame AgentManagerForm = new AgentFrame();
 		AgentManagerForm.setLocation(50, 50);
 
-		AgentFrame agent1Form = new AgentFrame();
-		agent1Form.setLocation(500, 50);
 
-		AgentFrame agent2Form = new AgentFrame();
-		agent2Form.setLocation(50, 370);
-
-		AgentFrame agent3Form = new AgentFrame();
-		agent3Form.setLocation(500, 370);
-
-		// create and start each agents with their frame in parameters
+		// create and start personnalAgent
 		//Personnal agent
-		jade.wrapper.AgentController managerAg = CreateAgent(mainContainer, "AgentManager", "agents.AuctionAgentManager", new Object[] { AgentManagerForm });
-		//Hotel
-		jade.wrapper.AgentController ag1 = CreateAgent(mainContainer, "Hotel", "agents.BuyerAgent", new Object[] { agent1Form });
-		//Transport
-		jade.wrapper.AgentController ag2 = CreateAgent(mainContainer, "Transport", "agents.BuyerAgent", new Object[] { agent2Form });
-		//Activities
-		jade.wrapper.AgentController ag3 = CreateAgent(mainContainer, "Activities", "agents.BuyerAgent", new Object[] { agent3Form });
+		jade.wrapper.AgentController managerAg = CreateAgent(mainContainer, "PersonnalAgent", "agents.PersonnalAgent", new Object[] { AgentManagerForm, mainContainer });
 
 		managerAg.start();
-		Thread.sleep(10);
-		ag1.start();
-		ag2.start();
-		ag3.start();
 
 	}
 

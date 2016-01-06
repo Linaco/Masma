@@ -6,7 +6,7 @@ package agents;
 
 /**
  *
- * @author lab
+ * @author Linaco
  */
 import jade.core.AID;
 import jade.core.Agent;
@@ -19,13 +19,11 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import behaviour.*;
 import util.AgentFrame;
-import util.Products;
-import util.YellowPages;
 
-public class ActivitiesAgent extends Agent {
+public class ActivitiesAgent extends WorkingAgent {
 
-	public AgentFrame windowsForm;
 	public AID providerAID = null;
 
 	@Override
@@ -34,28 +32,13 @@ public class ActivitiesAgent extends Agent {
 		if (args != null) {
 			windowsForm = (AgentFrame) args[0];
 		}
-
 		windowsForm.setTitle(this.getName());
 		windowsForm.setVisible(true);
-		try {
-			providerAID = YellowPages.FindService("AuctionService", this, 10);
-		} catch (FIPAException ex) {
-			Logger.getLogger(BuyerAgent.class.getName()).log(Level.SEVERE, null, ex);
-		}
-
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			System.out.println(e);
-		}
-
-		if (providerAID == null) {
-			windowsForm.AddTextLine("No auction provider found.");
-		} else {
-			windowsForm.AddTextLine("Found auction provider: " + providerAID.getLocalName());
-
-			addBehaviour(new BuyerRegister(this));
-			addBehaviour(new BuyerReceive(this));
-		}
+		
+		addBehaviour(new WindowRefresh(this,1000));
+		addBehaviour(new MessageReceiveAgent(this));
+		addBehaviour(new InitiatorSend(this));
+		
+		
 	}
 }
