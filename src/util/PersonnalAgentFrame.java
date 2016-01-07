@@ -2,19 +2,54 @@
 package util;
 
 
+import java.awt.Toolkit;
+import java.awt.event.*;
+
 import javax.swing.*;
 
-public class PersonnalAgentFrame extends Frame {
+import agents.PersonnalAgent;
+
+public class PersonnalAgentFrame extends Frame implements KeyListener{
+	/*Action action = new AbstractAction(){
+    	@Override
+    	public void actionPerformed(ActionEvent e)
+    	{
+    		System.out.println("Enter Key Pressed");
+    		AddTextLine(textAreaMessages.getText());
+    	}
+    };*/
 	
-	private JTextField jtf = new JTextField("Please enter your request");
+	private JTextField jtf;
+	private PersonnalAgent agent;
+	
+	
 	//private JLabel label = new JLabel("Request");
 	private JButton b = new JButton ("OK");
+	
     
-    public PersonnalAgentFrame() {
+    public PersonnalAgentFrame(PersonnalAgent a) {
+    	this.agent = a;
+    	jtf = new JTextField("Please enter your request");
+    	
         initComponents();
+        
+        jtf.addKeyListener(this);
+        
         //inchiderea unei ferestre determina inchiderea intregii aplicatii
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
+    
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int key = e.getKeyCode();
+        if (key == KeyEvent.VK_ENTER) {
+           //Toolkit.getDefaultToolkit().beep(); 
+        	System.out.println("Enter Key Pressed");
+    		AddTextLine(jtf.getText());
+    		agent.init(jtf.getText());
+        }
+    }
+    
 
     
     @SuppressWarnings("unchecked")
@@ -111,12 +146,26 @@ public class PersonnalAgentFrame extends Frame {
             }
         });
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
+    
     // End of variables declaration//GEN-END:variables
-
+    
     public void AddTextLine(String s)
     {
         textAreaMessages.append(s + "\r\n");
     }
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }
