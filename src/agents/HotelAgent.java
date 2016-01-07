@@ -51,6 +51,6 @@ public class HotelAgent extends WorkingAgent {
 	public Serializable search(Request request){
 		
 		
-		return null;
+		return Hotel.getHotel(request.city,request.priceMax,request.dateBegin,request.dateEnd,request.nbrStars);
 	}
 }

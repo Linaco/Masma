@@ -38,7 +38,7 @@ public class Activities implements Serializable {
 		return name + " : " + description + ". " + price +"€ [" + city + "] " + dateBegin + " to " + dateEnd;
 	}
 	
-	public static List<Activities> getListActivities(int price){
+	public static Activities[] getListActivities(String city, Date dateBegin, Date dateEnd, int price){
 		List<Activities> map = new ArrayList<Activities>();
 		
 		for(int i = 0; i < activities.size(); i++){
@@ -47,7 +47,17 @@ public class Activities implements Serializable {
 			}
 		}
 		
-		return sortList(map);
+		return toArray(sortList(map));
+	}
+
+	private static Activities[] toArray(List<Activities> sortList) {
+		Activities[] activities2 = new Activities[sortList.size()];
+		
+		for(int i = 0; i < sortList.size(); i++){
+			activities2[i] = sortList.get(i);
+				
+		}
+		return activities2;
 	}
 
 	private static List<Activities> sortList(List<Activities> map) {

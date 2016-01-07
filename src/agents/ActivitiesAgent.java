@@ -45,5 +45,7 @@ public class ActivitiesAgent extends WorkingAgent {
 	@Override
 	public Serializable search(Request request){
 		
+		return Activities.getListActivities(request.city,request.dateBegin,request.dateEnd,request.priceMax);
+		
 	}
 }
