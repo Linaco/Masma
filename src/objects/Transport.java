@@ -1,9 +1,10 @@
 package objects;
 
 import java.util.*;
+import java.io.Serializable;
 import java.text.*;
 
-public class Transport{
+public class Transport implements Serializable{
 	
 	public static List<Transport> transports = new ArrayList<Transport>();
 	

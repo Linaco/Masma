@@ -45,4 +45,8 @@ public class Trip{
 	public void addActivities(Activities activities){
 		this.activities.add(activities);
 	}
+	
+	public void increasePrice(int val){
+		price += val;
+	}
 }

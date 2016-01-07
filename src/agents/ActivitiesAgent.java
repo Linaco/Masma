@@ -14,7 +14,9 @@ import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
+import objects.*;
 
+import java.io.Serializable;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,8 +39,11 @@ public class ActivitiesAgent extends WorkingAgent {
 		
 		addBehaviour(new WindowRefresh(this,1000));
 		addBehaviour(new MessageReceiveAgent(this));
-		addBehaviour(new InitiatorSend(this));
-		
+		addBehaviour(new InitiatorSend(this));		
+	}
+	
+	@Override
+	public Serializable search(Request request){
 		
 	}
 }

@@ -55,7 +55,7 @@
 			"file": "agents/PersonnalAgent.java",
 			"settings":
 			{
-				"buffer_size": 1608,
+				"buffer_size": 1811,
 				"line_ending": "Unix"
 			}
 		},
@@ -63,7 +63,7 @@
 			"file": "behaviour/Initiate.java",
 			"settings":
 			{
-				"buffer_size": 1348,
+				"buffer_size": 1913,
 				"line_ending": "Unix"
 			}
 		},
@@ -71,7 +71,7 @@
 			"file": "objects/Hotel.java",
 			"settings":
 			{
-				"buffer_size": 888,
+				"buffer_size": 1809,
 				"line_ending": "Unix"
 			}
 		},
@@ -79,7 +79,7 @@
 			"file": "objects/Transport.java",
 			"settings":
 			{
-				"buffer_size": 728,
+				"buffer_size": 1583,
 				"line_ending": "Unix"
 			}
 		},
@@ -87,7 +87,7 @@
 			"file": "objects/Activities.java",
 			"settings":
 			{
-				"buffer_size": 724,
+				"buffer_size": 1722,
 				"line_ending": "Unix"
 			}
 		},
@@ -103,7 +103,7 @@
 			"file": "agents/HotelAgent.java",
 			"settings":
 			{
-				"buffer_size": 1481,
+				"buffer_size": 1049,
 				"line_ending": "Unix"
 			}
 		},
@@ -111,7 +111,7 @@
 			"file": "agents/TransportAgent.java",
 			"settings":
 			{
-				"buffer_size": 1486,
+				"buffer_size": 925,
 				"line_ending": "Unix"
 			}
 		},
@@ -119,7 +119,7 @@
 			"file": "agents/ActivitiesAgent.java",
 			"settings":
 			{
-				"buffer_size": 1490,
+				"buffer_size": 930,
 				"line_ending": "Unix"
 			}
 		},
@@ -127,7 +127,7 @@
 			"file": "behaviour/WindowRefresh.java",
 			"settings":
 			{
-				"buffer_size": 363,
+				"buffer_size": 405,
 				"line_ending": "Windows"
 			}
 		},
@@ -143,8 +143,16 @@
 			"file": "init/InitObjects.java",
 			"settings":
 			{
-				"buffer_size": 1406,
+				"buffer_size": 2673,
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/leo/Documents/Masma/Example/Lab6p1/src/auction/ManagerReceive.java",
+			"settings":
+			{
+				"buffer_size": 2306,
+				"line_ending": "Windows"
 			}
 		}
 	],
@@ -239,6 +247,7 @@
 	"groups":
 	[
 		{
+			"selected": 13,
 			"sheets":
 			[
 				{
@@ -273,7 +282,7 @@
 					"file": "agents/PersonnalAgent.java",
 					"settings":
 					{
-						"buffer_size": 1608,
+						"buffer_size": 1811,
 						"regions":
 						{
 						},
@@ -300,7 +309,7 @@
 					"file": "behaviour/Initiate.java",
 					"settings":
 					{
-						"buffer_size": 1348,
+						"buffer_size": 1913,
 						"regions":
 						{
 						},
@@ -328,7 +337,7 @@
 					"file": "objects/Hotel.java",
 					"settings":
 					{
-						"buffer_size": 888,
+						"buffer_size": 1809,
 						"regions":
 						{
 						},
@@ -355,7 +364,7 @@
 					"file": "objects/Transport.java",
 					"settings":
 					{
-						"buffer_size": 728,
+						"buffer_size": 1583,
 						"regions":
 						{
 						},
@@ -382,7 +391,7 @@
 					"file": "objects/Activities.java",
 					"settings":
 					{
-						"buffer_size": 724,
+						"buffer_size": 1722,
 						"regions":
 						{
 						},
@@ -437,7 +446,7 @@
 					"file": "agents/HotelAgent.java",
 					"settings":
 					{
-						"buffer_size": 1481,
+						"buffer_size": 1049,
 						"regions":
 						{
 						},
@@ -464,7 +473,7 @@
 					"file": "agents/TransportAgent.java",
 					"settings":
 					{
-						"buffer_size": 1486,
+						"buffer_size": 925,
 						"regions":
 						{
 						},
@@ -491,7 +500,7 @@
 					"file": "agents/ActivitiesAgent.java",
 					"settings":
 					{
-						"buffer_size": 1490,
+						"buffer_size": 930,
 						"regions":
 						{
 						},
@@ -518,7 +527,7 @@
 					"file": "behaviour/WindowRefresh.java",
 					"settings":
 					{
-						"buffer_size": 363,
+						"buffer_size": 405,
 						"regions":
 						{
 						},
@@ -572,15 +581,15 @@
 					"file": "init/InitObjects.java",
 					"settings":
 					{
-						"buffer_size": 1406,
+						"buffer_size": 2673,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1162,
-								1162
+								0,
+								0
 							]
 						],
 						"settings":
@@ -590,6 +599,34 @@
 						},
 						"translation.x": 0.0,
 						"translation.y": 399.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "/home/leo/Documents/Masma/Example/Lab6p1/src/auction/ManagerReceive.java",
+					"settings":
+					{
+						"buffer_size": 2306,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1317,
+								1328
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 306.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"

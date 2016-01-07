@@ -1,9 +1,10 @@
 package objects;
 
 import java.util.*;
+import java.io.Serializable;
 import java.text.*;
 
-public class Activities {
+public class Activities implements Serializable {
 	
 	public static List<Activities> activities = new ArrayList<Activities>();
 	

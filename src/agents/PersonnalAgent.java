@@ -10,6 +10,7 @@ package agents;
 import jade.core.AID;
 import jade.core.Agent;
 import objects.Request;
+import objects.Trip;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,11 +23,12 @@ public class PersonnalAgent extends WorkingAgent {
 	public jade.wrapper.AgentContainer mainContainer;
 	public AID providerAID = null;
 	
-	private Request request = new Request();
+	public Request request = new Request();
 
 	private Agent hotel;
 	private Agent transport;
 	private Agent activities;
+	public Trip trip;
 
 	@Override
 	public void setup() {
@@ -70,6 +72,6 @@ public class PersonnalAgent extends WorkingAgent {
 			System.out.println("Unparsable using "+ ft);
 		}
 		
-		System.out.println(request);
+		//System.out.println(request);
 	}
 }

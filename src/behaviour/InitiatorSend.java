@@ -1,11 +1,14 @@
 
 package behaviour;
 
+import java.io.IOException;
+
 import agents.WorkingAgent;
 import util.*;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
+import objects.Request;
 
 public class InitiatorSend extends OneShotBehaviour {
     
@@ -27,6 +30,7 @@ public class InitiatorSend extends OneShotBehaviour {
 
         AID receiverAID = new AID("PersonnalAgent", AID.ISLOCALNAME); 
         m.addReceiver(receiverAID);
+       
         myAgent.send(m);
 
         stringToDisplay += receiverAID.getLocalName() + " message: [INFORM]";

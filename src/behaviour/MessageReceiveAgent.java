@@ -5,6 +5,7 @@ import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.*;
 import jade.lang.acl.*;
+import objects.*;
 import util.GlobalCounter;
 
 import java.io.*;
@@ -50,31 +51,27 @@ public class MessageReceiveAgent extends CyclicBehaviour
                     //Personnal agent call for a proposition of service
 
                     GlobalCounter.Increment();
-                    
                     stringToDisplay += GlobalCounter.Get() + " " + "Received from " + senderName + " message: [PROPOSE]";
                     myAgent.windowsForm.AddTextLine(stringToDisplay);
-
-                    stringToDisplay = "Replying to " + senderName + " with message: ";
-
+                    
+                    
+                    
+                    //Answer
                     ACLMessage reply = null;
-
-                    //decide if to accept the proposal
-                    /*if (Probability.Validate(myAgent.probabilityToAcceptProposal) == true)
-                    {
-                        reply = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
-                        stringToDisplay += "[ACCEPT_PROPOSAL]";
-                    }
-                    else
-                    {
-                        reply = new ACLMessage(ACLMessage.REJECT_PROPOSAL);
-                        stringToDisplay += "[REJECT_PROPOSAL]";
-                    }*/
+                    try {
+            			Request request = (Request) message.getContentObject();
+            			reply.setContentObject(myAgent.search(request));
+            		} catch (UnreadableException | IOException e) {
+            			// TODO Auto-generated catch block
+            			e.printStackTrace();
+            		}
 
                     reply.addReceiver(senderAID);
+                    
                     myAgent.send(reply);
 
                     GlobalCounter.Increment();
-
+                    stringToDisplay = "Replying to " + senderName + " with message: ";
                     myAgent.windowsForm.AddTextLine(GlobalCounter.Get() + " " + stringToDisplay);
 
                     break;

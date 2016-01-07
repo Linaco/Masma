@@ -1,9 +1,10 @@
 package objects;
 
 import java.util.*;
+import java.io.Serializable;
 import java.text.*;
 
-public class Hotel{
+public class Hotel implements Serializable{
 
 	public static List<Hotel> hotels = new ArrayList<Hotel>();
 	public static int lastIndex = 0;
@@ -16,6 +17,8 @@ public class Hotel{
 	public int numberOfBeds;
 	public int numberOfRooms;
 	public int range;
+	
+	private double pourcentageWE = 1.3;
 	
 	
 	public Hotel(String name, String city, String dateBegin, String dateEnd, int numberOfBeds, int numberOfRooms, int range, int price){
