@@ -15,6 +15,7 @@ import jade.core.behaviours.OneShotBehaviour;
 import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 import objects.Request;
+import objects.Transport;
 
 import java.io.Serializable;
 import java.util.Random;
@@ -45,6 +46,15 @@ public class TransportAgent extends WorkingAgent {
 	
 	@Override
 	public Serializable search(Request request){
+		
+		if(request.transport != "false"){
+			return Transport.getTransport("Iasi",request.city,request.dateBegin,request.dateEnd,false);
+		}
+		
+		
+		Transport[] array = {new Transport("Private car","Iasi",request.city,request.dateBegin,-1,0), new Transport("Private car",request.city,"Iasi",request.dateBegin,-1,0)};
+				
+		return array;
 		
 	}
 }
