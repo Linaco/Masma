@@ -20,7 +20,7 @@ import util.AgentFrame;
 public class MASInit {
 	public static void DoInitialization() throws ControllerException, InterruptedException {
 		// create main container
-		jade.wrapper.AgentContainer mainContainer = CreateContainer("TripCompany", true, "localhost", "", "1099");
+		jade.wrapper.AgentContainer mainContainer = CreateContainer("TripCompany", true, "localhost", "", "1089");
 		mainContainer.start();
 
 		//Import data

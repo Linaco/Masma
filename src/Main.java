@@ -1,5 +1,6 @@
 import init.*;
 import jade.wrapper.ControllerException;
+import util.*;
 
 public class Main {
 
@@ -8,7 +9,8 @@ public class Main {
     	InitObjects.InitActivities();
     	InitObjects.InitHotel();
     	InitObjects.InitTransport();
-    	InitObjects.printAll();
-        //MASInit.DoInitialization();
+    	//InitObjects.printAll();
+        MASInit.DoInitialization();
+        //new PersonnalAgentFrame().setVisible(true);;
     }
 }

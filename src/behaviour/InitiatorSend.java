@@ -20,8 +20,7 @@ public class InitiatorSend extends OneShotBehaviour {
     @Override
     public void action()
     {
-        //send inform of existing
-        
+        //send inform of existing        
         ACLMessage m = new ACLMessage(ACLMessage.INFORM);
 
         String stringToDisplay = "Sending to ";

@@ -2,10 +2,15 @@
 package util;
 
 
-public class AgentFrame extends Frame{
+import javax.swing.*;
 
+public class PersonnalAgentFrame extends Frame {
+	
+	private JTextField jtf = new JTextField("Please enter your request");
+	//private JLabel label = new JLabel("Request");
+	private JButton b = new JButton ("OK");
     
-    public AgentFrame() {
+    public PersonnalAgentFrame() {
         initComponents();
         //inchiderea unei ferestre determina inchiderea intregii aplicatii
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -21,14 +26,39 @@ public class AgentFrame extends Frame{
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        textAreaMessages.setColumns(20);
-        textAreaMessages.setRows(5);
+        textAreaMessages.setColumns(40);
+        textAreaMessages.setRows(10);
         jScrollPane1.setViewportView(textAreaMessages);
+        
+        /*this.setSize(480, 640);
+        this.setLayout(new BorderLayout());
+        this.getContentPane().add(jtf, BorderLayout.NORTH);
+        this.getContentPane().add(jScrollPane1, BorderLayout.WEST);*/
+        //this.getContentPane().add(jScrollPane1, BorderLayout.EAST);
+        
+        
+        
+        /*this.setTitle("Animation");
+        this.setSize(300, 300);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        Frame container = null;
+		//container.setBackground(Color.WHITE);
+        container.setLayout(new BorderLayout());
+        JPanel top = new JPanel();
+        Font police = new Font("Arial", Font.BOLD, 14);
+        jtf.setFont(police);
+        jtf.setPreferredSize(new Dimension(150, 30));
+        top.add(label);
+        top.add(jtf);
+        container.add(top, BorderLayout.NORTH);*/
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        	//layout.createSequentialGroup()
+            .addComponent(jtf)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
@@ -38,10 +68,14 @@ public class AgentFrame extends Frame{
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jtf)
+                .addGap(NORMAL)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
                 .addContainerGap())
         );
-
+        
+        this.setVisible(true);
+        
         pack();
     }// </editor-fold>//GEN-END:initComponents
 

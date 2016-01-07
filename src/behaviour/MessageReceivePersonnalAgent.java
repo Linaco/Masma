@@ -25,6 +25,13 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
         
         if(message != null)
         {
+        	try {
+				Thread.sleep(750);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	
             /*String s = message.getContent() + " from " + message.getSender().getLocalName();
             myAgent.frame.AddTextLine(s);
             
