@@ -56,7 +56,7 @@ public class Transport implements Serializable{
 		
 		
 		for (int i = 0; i < transports.size() ; i++){
-			if(transports.get(i).from == from && transports.get(i).destination == city && transports.get(i).price <= lastPrice){
+			if(transports.get(i).from.equals(from) && transports.get(i).destination.equals(city) && transports.get(i).price <= lastPrice){
 				lastPrice = transports.get(i).price;
 				transport[0] = transports.get(i);
 			}
@@ -65,7 +65,7 @@ public class Transport implements Serializable{
 		lastPrice = 99999;
 		
 		for (int i = 0; i < transports.size() ; i++){
-			if(transports.get(i).from == city && transports.get(i).destination == from && transports.get(i).price <= lastPrice){
+			if(transports.get(i).from.equals(city) && transports.get(i).destination.equals(from) && transports.get(i).price <= lastPrice){
 				lastPrice = transports.get(i).price;
 				transport[1] = transports.get(i);
 			}

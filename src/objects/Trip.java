@@ -15,7 +15,9 @@ public class Trip{
 	public Date dateEnd;
 	public int price;
 
-
+	public Trip(){
+		
+	}
 
 	public Trip(String dateBegin, String dateEnd, int price){
 		SimpleDateFormat ft = new SimpleDateFormat("dd.MM.yyyy");

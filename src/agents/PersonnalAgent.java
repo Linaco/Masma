@@ -28,7 +28,7 @@ public class PersonnalAgent extends WorkingAgent {
 	private Agent hotel;
 	private Agent transport;
 	private Agent activities;
-	public Trip trip;
+	public Trip trip = new Trip();
 
 	@Override
 	public void setup() {

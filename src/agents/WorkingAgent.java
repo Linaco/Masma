@@ -23,4 +23,17 @@ public abstract class WorkingAgent extends Agent {
 		addBehaviour(new InitiatorSend(this));
 		
 	}
+	
+	@Override
+	public void takeDown(){
+		windowsForm.repaint();
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		windowsForm.setVisible(false); //you can't see me!
+		windowsForm.dispose();;
+	}
 }

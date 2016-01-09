@@ -42,7 +42,7 @@ public class Activities implements Serializable {
 		List<Activities> map = new ArrayList<Activities>();
 		
 		for(int i = 0; i < activities.size(); i++){
-			if(activities.get(i).price <= price ){
+			if(activities.get(i).city.equals(city) && activities.get(i).price <= price ){
 				map.add(activities.get(i));
 			}
 		}

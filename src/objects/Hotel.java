@@ -62,12 +62,39 @@ public class Hotel implements Serializable{
 		return lastHotel;
 	}
 
+	//compute the price of the stay regarding the number of day stayed and the days stayed
 	private int price(Date dateBe, Date dateEn) {
-		int nbr = daysBetween(dateBe,dateEn);
-		return nbr * price;
+		int result = 0;
+		
+		while( !dateBe.after(dateEn)){
+			if(dateBe.getDay() == 6 || dateBe.getDay() == 7){
+				result += (int) (price * pourcentageWE);
+			} else {
+				result += price;
+			}
+			
+			//Add one to the date
+			dateBe.setDate(dateBe.getDate() + 1);
+		}
+		
+		return result;
 	}
 	
+	//number of days between two date
 	private int daysBetween(Date d1, Date d2){
         return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+	}
+	
+	//return boolean regarding the availability of the hotel
+	private boolean availabilty(Date d1, Date d2){
+		if( !(d1.after(this.dateBegin) && d1.before(this.dateEnd))){
+			return false;
+		}
+		
+		if ( !(d2.after(this.dateBegin) && d2.before(this.dateEnd))){
+			return false;
+		}
+		
+		return true;
 	}
 }

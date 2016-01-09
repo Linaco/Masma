@@ -26,8 +26,7 @@ public class MessageReceiveAgent extends CyclicBehaviour
     {
         ACLMessage message = null;
 
-        MessageTemplate pattern = MessageTemplate.MatchConversationId("ID1");
-        message = myAgent.receive(pattern);
+        message = myAgent.receive();
 
         if (message != null)
         {
@@ -37,8 +36,8 @@ public class MessageReceiveAgent extends CyclicBehaviour
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-            String s = message.getContent() + " from " + message.getSender().getLocalName();
-            myAgent.windowsForm.AddTextLine(s);
+            //String s = message.getContent() + " from " + message.getSender().getLocalName();
+            //myAgent.windowsForm.AddTextLine(s);
             
             
             AID senderAID = message.getSender();
@@ -49,15 +48,16 @@ public class MessageReceiveAgent extends CyclicBehaviour
             {
                 case ACLMessage.CFP:
                     //Personnal agent call for a proposition of service
+                	System.out.println("CFP");
 
                     GlobalCounter.Increment();
-                    stringToDisplay += GlobalCounter.Get() + " " + "Received from " + senderName + " message: [PROPOSE]";
+                    stringToDisplay += GlobalCounter.Get() + " " + "Received from " + senderName + " message: [CFP]";
                     myAgent.windowsForm.AddTextLine(stringToDisplay);
                     
                     
                     
                     //Answer
-                    ACLMessage reply = null;
+                    ACLMessage reply = new ACLMessage(ACLMessage.PROPOSE);
                     try {
             			Request request = (Request) message.getContentObject();
             			reply.setContentObject(myAgent.search(request));
@@ -71,19 +71,24 @@ public class MessageReceiveAgent extends CyclicBehaviour
                     myAgent.send(reply);
 
                     GlobalCounter.Increment();
-                    stringToDisplay = "Replying to " + senderName + " with message: ";
+                    stringToDisplay = "Replying to " + senderName + " with message: [PROPOSE]";
                     myAgent.windowsForm.AddTextLine(GlobalCounter.Get() + " " + stringToDisplay);
 
                     break;
 
                 case ACLMessage.AGREE:
                     //Receive agreement about the proposition
+                	GlobalCounter.Increment();
+                    stringToDisplay += GlobalCounter.Get() + " " + "Received from " + senderName + " message: [AGREE]\nShutting down";
+                    myAgent.windowsForm.AddTextLine(stringToDisplay);
                     //shutdown
                 	myAgent.doDelete();
+                	break;
 
                 case ACLMessage.REFUSE:
                     //Personnal agent refuses the proposition
                     //agent has to try again
+                	break;
 
                 default:
                     break;

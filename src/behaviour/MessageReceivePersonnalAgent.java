@@ -70,7 +70,8 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
                     myAgent.windowsForm.AddTextLine(stringToDisplay);
                 	
                     //Wait until transportAgent answers for a proposal
-                	if (senderName == "Transport" || answer){
+                    System.out.println(senderName);
+                	if (senderName.equals("Transport") || answer){
                 		
                         sendCFP(senderAID);
                         
@@ -78,16 +79,19 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
                 		switch (senderName)
                 		{
                 			case "Activities":
+                				System.out.println(senderName);
                 				activitiesIsWaiting = true;
                 				activitiesAID = senderAID;
                 				break;
                 				
                 			case "Hotel":
+                				System.out.println(senderName);
                 				hotelIsWaiting = true;
                 				hotelAID = senderAID;
                 				break;
                 					
                 			default:
+                				System.out.println("Fail");
                 				break;
                 		}
                 			
@@ -135,6 +139,7 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
                 		sendCFP(hotelAID);
                 		hotelIsWaiting = false;
                 	}
+                	break;
 
                 case ACLMessage.FAILURE:
                     //Agent couldn't find something with give properties
@@ -144,6 +149,7 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
                     //Send message to say "ok, shutdown"
                 	
                 	sendConfirm(senderAID);
+                	break;
                                    
                 case ACLMessage.REQUEST:
                 	//Ask to change the date
@@ -163,14 +169,14 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
     }
 
 	private void sendConfirm(AID senderAID) {
-		ACLMessage toSend = new ACLMessage(ACLMessage.CONFIRM);
+		ACLMessage toSend = new ACLMessage(ACLMessage.AGREE);
 
         String stringToDisplay = "Sending to ";
 
         toSend.addReceiver(senderAID);
         myAgent.send(toSend);
 
-        stringToDisplay += senderAID.getLocalName() + " message: [CONFIRM]";
+        stringToDisplay += senderAID.getLocalName() + " message: [AGREE]";
 
         GlobalCounter.Increment();
 
