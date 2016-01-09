@@ -96,42 +96,50 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
                 case ACLMessage.PROPOSE:
                     //Receive proposition from agent about a price
                 	myAgent.windowsForm.AddTextLine(stringToDisplayReceive + "[PROPOSE]");
-                	
-                    switch (senderName)
-            		{
-            			case "Activities":
-            				activitiesMessage(message);
-            				break;
-            				
-            			case "Hotel":
-            				hotelMessage(message);
-            				break;
-            			
-            				
-            			case "Transport":
-            				transportMessage(message);
-            				break;
-            				
-            			default:
-            				break;
-            		}
-                	
-                    //To say that "transportAgent" answer. Then if other agent "INFORM" PersonnalAgent can anwser directly
-                 	answer = true;
-                	
-                 	//In case agent is waiting for an answer, this will send them the CFP
-                	if(activitiesIsWaiting){
-                		sendCFP(activitiesAID);
-                		activitiesIsWaiting = false;
+                	if(Math.random() >= 0.8){
+                		//Accept Proposal
+                		switch (senderName)
+                		{
+                			case "Activities":
+                				activitiesMessage(message);
+                				break;
+                				
+                			case "Hotel":
+                				hotelMessage(message);
+                				break;
+                			
+                				
+                			case "Transport":
+                				transportMessage(message);
+                				break;
+                				
+                			default:
+                				break;
+                		}
+                        //Accept the proposition
+        				sendConfirm(senderAID);
+                    	
+                        //To say that "transportAgent" answer. Then if other agent "INFORM" PersonnalAgent can anwser directly
+                     	answer = true;
+                    	
+                     	//In case agent is waiting for an answer, this will send them the CFP
+                    	if(activitiesIsWaiting){
+                    		sendCFP(activitiesAID);
+                    		activitiesIsWaiting = false;
+                    	}
+                    	
+                    	if(hotelIsWaiting){
+                    		sendCFP(hotelAID);
+                    		hotelIsWaiting = false;
+                    	}
+                		
+                		
+                	} else {
+                		//reject Proposal
+                		sendRefuse(senderAID);
                 	}
+                                    	
                 	
-                	if(hotelIsWaiting){
-                		sendCFP(hotelAID);
-                		hotelIsWaiting = false;
-                	}
-                	
-                	//Accept the proposition
-    				sendConfirm(senderAID);
                 	
                 	//Check if the trip is complete then print it
                 	myAgent.checkTrip();
@@ -316,6 +324,20 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
 		toSend.addReceiver(senderAID);
 
         myAgent.windowsForm.AddTextLine(GlobalCounter.Get() + " Sending to sender" + senderAID.getLocalName() + " message: [ACCEPT_PROPOSAL]");
+        myAgent.send(toSend);
+        
+        //One proposition is accepted and added to the trip
+        //Increase the state of principalAgent
+        myAgent.state++;
+		
+	}
+	
+	private void sendRefuse(AID senderAID) {
+		ACLMessage toSend = new ACLMessage(ACLMessage.REJECT_PROPOSAL);
+		
+		toSend.addReceiver(senderAID);
+
+        myAgent.windowsForm.AddTextLine(GlobalCounter.Get() + " Sending to sender" + senderAID.getLocalName() + " message: [REJECT_PROPOSAL]");
         myAgent.send(toSend);
         
         //One proposition is accepted and added to the trip

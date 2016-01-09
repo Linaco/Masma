@@ -9,6 +9,8 @@ import jade.lang.acl.*;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
 import jade.wrapper.StaleProxyException;
+import objects.Hotel;
+import objects.Transport;
 import util.AgentFrame;
 
 
@@ -27,6 +29,7 @@ public class Initiate extends OneShotBehaviour
     public void action()
     {
 
+    	init();
     //initiate and start all agent
         //wait for callback to send info
 
@@ -59,7 +62,13 @@ public class Initiate extends OneShotBehaviour
 		}
     }
     
-    private static AgentController CreateAgent(AgentContainer container, String agentName, String agentClass, Object[] args) throws StaleProxyException {
+    private void init() {
+		Hotel.lastIndex = 0;
+		Transport.indexBack = 0;
+		Transport.indexGo = 0;
+	}
+
+	private static AgentController CreateAgent(AgentContainer container, String agentName, String agentClass, Object[] args) throws StaleProxyException {
 		return container.createNewAgent(agentName, agentClass, args);
 	}
 }

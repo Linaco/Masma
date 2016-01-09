@@ -51,7 +51,7 @@ public class MessageReceiveAgent extends CyclicBehaviour
             ACLMessage reply;
 
             switch (message.getPerformative())
-            {
+            {       	
                 case ACLMessage.CFP:
                     //Personnal agent call for a proposition of service
                 	myAgent.windowsForm.AddTextLine(stringToDisplayReceive + "[CFP]");
@@ -61,37 +61,7 @@ public class MessageReceiveAgent extends CyclicBehaviour
                     
                     //Answer
                     
-                    Object temp = null;
-                    
-                    
-					Request request;
-					try {
-						request = (Request) message.getContentObject();
-						temp = myAgent.search(request);
-						
-						 if (temp != (Serializable) null){
-		                    	reply = new ACLMessage(ACLMessage.PROPOSE);
-		                    	stringToDisplay += " with message: [PROPOSE]";
-		                   } else {
-		                	   if(myAgent.getLocalName().equals("Transport") || myAgent.getLocalName().equals("Hotel")){
-		                		   reply = new ACLMessage(ACLMessage.REQUEST);
-		                		   stringToDisplay += " with message: [REQUEST]";
-		                		   temp = myAgent.getNewDate(request);
-		                	   } else {		      
-			                    	reply = new ACLMessage(ACLMessage.FAILURE);
-			                    	stringToDisplay += " with message: [FAILURE]";
-		                	   }
-		                    }
-						 reply.setContentObject((Serializable) temp);
-						 reply.addReceiver(senderAID);
-
-						 myAgent.send(reply);
-		                    
-		                 myAgent.windowsForm.AddTextLine(stringToDisplay);
-					} catch (UnreadableException | IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+                    search(stringToDisplay, message);
 
                     break;
 
@@ -104,18 +74,24 @@ public class MessageReceiveAgent extends CyclicBehaviour
                     //shutdown
                 	myAgent.doDelete();
                 	break;
-
-                case ACLMessage.REJECT_PROPOSAL:
-                    //Personnal agent refuses the proposition
-                	myAgent.windowsForm.AddTextLine(stringToDisplayReceive + "[REJECT_PROPOSAL]");
-                    //agent has to try again
                 	
-                	//Shutting down
-                	stringToDisplay = "Shutting down";
-                    myAgent.windowsForm.AddTextLine(stringToDisplay);
-                    //shutdown
-                	myAgent.doDelete();
-                	break;
+                case ACLMessage.REJECT_PROPOSAL:
+	                //Personnal agent refuses the proposition
+	            	myAgent.windowsForm.AddTextLine(stringToDisplayReceive + "[REJECT_PROPOSAL]");
+	                //agent has to try again
+	            	
+	            	
+	            	search(stringToDisplay, message);
+	            	
+	            	
+	            	
+	            	
+	            	//Shutting down
+	            	/*stringToDisplay = "Shutting down";
+	                myAgent.windowsForm.AddTextLine(stringToDisplay);
+	                //shutdown
+	            	myAgent.doDelete();*/
+
                 	
                 case ACLMessage.AGREE:
                 	//Agree the request
@@ -147,5 +123,40 @@ public class MessageReceiveAgent extends CyclicBehaviour
             */
             block();
         }
+    }
+    
+    public void search(String stringToDisplay,ACLMessage message){
+    	Object temp = null;
+    	AID senderAID = message.getSender();
+        ACLMessage reply;
+        
+		Request request;
+		try {
+			request = (Request) message.getContentObject();
+			temp = myAgent.search(request);
+			
+			 if (temp != (Serializable) null){
+                	reply = new ACLMessage(ACLMessage.PROPOSE);
+                	stringToDisplay += " with message: [PROPOSE]";
+               } else {
+            	   if(myAgent.getLocalName().equals("Transport") || myAgent.getLocalName().equals("Hotel")){
+            		   reply = new ACLMessage(ACLMessage.REQUEST);
+            		   stringToDisplay += " with message: [REQUEST]";
+            		   temp = myAgent.getNewDate(request);
+            	   } else {		      
+                    	reply = new ACLMessage(ACLMessage.FAILURE);
+                    	stringToDisplay += " with message: [FAILURE]";
+            	   }
+                }
+			 reply.setContentObject((Serializable) temp);
+			 reply.addReceiver(senderAID);
+
+			 myAgent.send(reply);
+                
+             myAgent.windowsForm.AddTextLine(stringToDisplay);
+		} catch (UnreadableException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 }
