@@ -49,16 +49,17 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
             String senderName = senderAID.getLocalName();
             
             GlobalCounter.Increment();
-            String stringToDisplay = GlobalCounter.Get() + " " + "Received from " + senderName + " message: " + message.getPerformative();
-            myAgent.windowsForm.AddTextLine(stringToDisplay);
+            String stringToDisplayReceive = GlobalCounter.Get() + " " + "Received from " + senderName + " message: ";
+            myAgent.windowsForm.AddTextLine(stringToDisplayReceive + "[]");
             
             GlobalCounter.Increment();
-            stringToDisplay = GlobalCounter.Get() + "Replying to " + senderName;
+            String stringToDisplay = GlobalCounter.Get() + "Replying to " + senderName;
 
             switch (message.getPerformative())
             {
                 case ACLMessage.INFORM:
                     //Agent says it exist
+                	myAgent.windowsForm.AddTextLine(stringToDisplayReceive + "[INFORM]");
                 	
                     //Wait until transportAgent answers for a proposal
                 	if (senderName.equals("Transport") || answer){
@@ -94,6 +95,7 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
 
                 case ACLMessage.PROPOSE:
                     //Receive proposition from agent about a price
+                	myAgent.windowsForm.AddTextLine(stringToDisplayReceive + "[PROPOSE]");
                 	
                     switch (senderName)
             		{
@@ -137,6 +139,7 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
 
                 case ACLMessage.FAILURE:
                     //Agent couldn't find something with give properties
+                	myAgent.windowsForm.AddTextLine(stringToDisplayReceive + "[REFUSE]");
                     
                     //The trip won't be good because something is bad
                     myAgent.trip.setCorrupted(true);
@@ -173,6 +176,7 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
                                    
                 case ACLMessage.REQUEST:
                 	//Ask to change the date
+                	myAgent.windowsForm.AddTextLine(stringToDisplayReceive + "[REQUEST]");
 
 
                 default:
@@ -279,11 +283,11 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
 	}
 	
 	private void sendConfirm(AID senderAID) {
-		ACLMessage toSend = new ACLMessage(ACLMessage.AGREE);
+		ACLMessage toSend = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
 		
 		toSend.addReceiver(senderAID);
 
-        myAgent.windowsForm.AddTextLine(GlobalCounter.Get() + " Sending to sender" + senderAID.getLocalName() + " message: [AGREE]");
+        myAgent.windowsForm.AddTextLine(GlobalCounter.Get() + " Sending to sender" + senderAID.getLocalName() + " message: [ACCEPT_PROPOSAL]");
         myAgent.send(toSend);
         
         //One proposition is accepted and added to the trip

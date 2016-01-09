@@ -40,20 +40,21 @@ public class MessageReceiveAgent extends CyclicBehaviour
             //myAgent.windowsForm.AddTextLine(s);
             
             
-            AID senderAID = message.getSender();
+        	AID senderAID = message.getSender();
             String senderName = senderAID.getLocalName();
             
             GlobalCounter.Increment();
-            String stringToDisplay = GlobalCounter.Get() + " " + "Received from " + senderName + " message: " + message.getPerformative();
-            myAgent.windowsForm.AddTextLine(stringToDisplay);
+            String stringToDisplayReceive = GlobalCounter.Get() + " " + "Received from " + senderName + " message: ";
+            myAgent.windowsForm.AddTextLine(stringToDisplayReceive + "[]");
             
             GlobalCounter.Increment();
-            stringToDisplay = GlobalCounter.Get() + "Replying to " + senderName;
+            String stringToDisplay = GlobalCounter.Get() + "Replying to " + senderName;
 
             switch (message.getPerformative())
             {
                 case ACLMessage.CFP:
                     //Personnal agent call for a proposition of service
+                	myAgent.windowsForm.AddTextLine(stringToDisplayReceive + "[CFP]");
                 	System.out.println("CFP");
 
                     
@@ -88,16 +89,19 @@ public class MessageReceiveAgent extends CyclicBehaviour
 
                     break;
 
-                case ACLMessage.AGREE:
+                case ACLMessage.ACCEPT_PROPOSAL:
                     //Receive agreement about the proposition
+                	myAgent.windowsForm.AddTextLine(stringToDisplayReceive + "[ACCEPT_PROPOSAL]");
+                	
                     stringToDisplay = "Shutting down";
                     myAgent.windowsForm.AddTextLine(stringToDisplay);
                     //shutdown
                 	myAgent.doDelete();
                 	break;
 
-                case ACLMessage.REFUSE:
+                case ACLMessage.REJECT_PROPOSAL:
                     //Personnal agent refuses the proposition
+                	myAgent.windowsForm.AddTextLine(stringToDisplayReceive + "[REJECT_PROPOSAL]");
                     //agent has to try again
                 	
                 	//Shutting down
