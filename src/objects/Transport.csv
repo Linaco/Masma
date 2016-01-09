@@ -1,6 +1,6 @@
 Name,From,Destination,Date,Range,Price
-TGV,Iasi,Bacau,10.10.2015,0,100
-TGV,Iasi,Bacau,10.10.2015,1,400
-TGV,Bacau,Iasi,15.10.2015,0,100
-TGV,Bacau,Iasi,15.10.2015,1,400
-Plane,Iasi,Bacau,10.10.2015,0,100
+train,Iasi,Bacau,10.10.2015,0,100
+train,Iasi,Bacau,10.10.2015,1,400
+train,Bacau,Iasi,15.10.2015,0,100
+train,Bacau,Iasi,15.10.2015,1,400
+plane,Iasi,Bacau,10.10.2015,0,100

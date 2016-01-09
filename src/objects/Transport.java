@@ -50,13 +50,13 @@ public class Transport implements Serializable{
 	
 	
 	
-	public static Transport[] getTransport(String from, String city, Date dateBegin, Date dateEnd, boolean flex){
+	public static Transport[] getTransport(String from, String city, Date dateBegin, Date dateEnd, String mean, boolean flex){
 		Transport[] transport = new Transport[2];
 		int lastPrice = 99999;
 		
 		
 		for (int i = 0; i < transports.size() ; i++){
-			if(transports.get(i).from.equals(from) && transports.get(i).destination.equals(city) && transports.get(i).price <= lastPrice){
+			if(transports.get(i).from.equals(from) && transports.get(i).destination.equals(city) && transports.get(i).price <= lastPrice && transports.get(i).name.equals(mean) ){
 				lastPrice = transports.get(i).price;
 				transport[0] = transports.get(i);
 			}
@@ -65,7 +65,7 @@ public class Transport implements Serializable{
 		lastPrice = 99999;
 		
 		for (int i = 0; i < transports.size() ; i++){
-			if(transports.get(i).from.equals(city) && transports.get(i).destination.equals(from) && transports.get(i).price <= lastPrice){
+			if(transports.get(i).from.equals(city) && transports.get(i).destination.equals(from) && transports.get(i).price <= lastPrice  && transports.get(i).name.equals(mean)){
 				lastPrice = transports.get(i).price;
 				transport[1] = transports.get(i);
 			}

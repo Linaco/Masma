@@ -2,6 +2,7 @@
 package behaviour;
 
 import java.io.IOException;
+import java.util.Date;
 
 import agents.PersonnalAgent;
 import jade.core.AID;
@@ -139,11 +140,43 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
                 		sendCFP(hotelAID);
                 		hotelIsWaiting = false;
                 	}
+                	
+                	//Check if the trip is complete then print it
+                	myAgent.checkTrip();
                 	break;
 
                 case ACLMessage.FAILURE:
                     //Agent couldn't find something with give properties
+                	GlobalCounter.Increment();
+                    stringToDisplay += GlobalCounter.Get() + " " + "Received from " + senderName + " message: [FAILURE]";
+                    myAgent.windowsForm.AddTextLine(stringToDisplay);
                     
+                    //The trip won't be good because something is bad
+                    myAgent.trip.setCorrupted(true);
+                	
+                    //Put default value to Trip Object
+                    switch (senderName)
+            		{
+            			case "Activities":
+            				activitiesFail();
+            				break;
+            				
+            			case "Hotel":
+            				hotelFail();
+            				break;
+            			
+            				
+            			case "Transport":
+            				transportFail();
+            				break;
+            				
+            			default:
+            				break;
+            		}
+                	
+                  //Check if the trip is complete then print it
+                    myAgent.state++;
+                    myAgent.checkTrip();
 
 
                     //Send message to say "ok, shutdown"
@@ -168,6 +201,19 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
         }
     }
 
+	private void transportFail() {
+		myAgent.trip.setTransportGo(new Transport("Not Found", "Iasi", myAgent.request.city, myAgent.request.dateBegin, -1, 0));
+		myAgent.trip.setTransportGo(new Transport("Not Found", myAgent.request.city, "Iasi", myAgent.request.dateEnd, -1, 0));		
+	}
+
+	private void hotelFail() {
+		myAgent.trip.setHotel(new Hotel("Not Found",myAgent.request.city, myAgent.request.dateBegin, myAgent.request.dateEnd));
+	}
+
+	private void activitiesFail() {
+		myAgent.trip.addActivities(new Activities("","Not found","N/A",new Date(), new Date(), -1));
+	}
+
 	private void sendConfirm(AID senderAID) {
 		ACLMessage toSend = new ACLMessage(ACLMessage.AGREE);
 
@@ -179,16 +225,21 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
         stringToDisplay += senderAID.getLocalName() + " message: [AGREE]";
 
         GlobalCounter.Increment();
-
+        
+        //One proposition is accepted and added to the trip
+        //Increase the state of principalAgent
+        myAgent.state++;
         myAgent.windowsForm.AddTextLine(GlobalCounter.Get() + " " + stringToDisplay);
 		
 	}
 
 	private void hotelMessage(ACLMessage message) {
 		try {
+			myAgent.windowsForm.AddTextLine("-----------------Hotel----------");
 			Hotel hotel = (Hotel) message.getContentObject();
 			myAgent.trip.setHotel(hotel);
 			myAgent.trip.increasePrice(hotel.price);
+			myAgent.windowsForm.AddTextLine(hotel.toString() + "\n");
 		
 		} catch (UnreadableException e) {
 			// TODO Auto-generated catch block
@@ -201,10 +252,12 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
 
 	private void activitiesMessage(ACLMessage message) {
 		try {
+			myAgent.windowsForm.AddTextLine("-----------------Activities----------");
 			Activities[] activities = (Activities[]) message.getContentObject();
 			for(int i = 0; i < activities.length; i++){
 				myAgent.trip.addActivities(activities[i]);
 				myAgent.trip.increasePrice(activities[i].price);
+				myAgent.windowsForm.AddTextLine(activities[i].toString()  + "\n");
 			}
 			
 		} catch (UnreadableException e) {
@@ -217,14 +270,17 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
 
 	private void transportMessage(ACLMessage message) {
 		try {
+			myAgent.windowsForm.AddTextLine("-----------------Transport----------");
 			Transport[] transport = (Transport[]) message.getContentObject();
 			myAgent.trip.setTransportGo(transport[0]);
 			myAgent.request.substractTransport(transport[0].price);
 			myAgent.trip.increasePrice(transport[0].price);
+			myAgent.windowsForm.AddTextLine(transport[0].toString());
 			
 			myAgent.trip.setTransportBack(transport[1]);						
 			myAgent.request.substractTransport(transport[1].price);
 			myAgent.trip.increasePrice(transport[1].price);
+			myAgent.windowsForm.AddTextLine(transport[1].toString() + "\n");
 		
 		} catch (UnreadableException e) {
 			// TODO Auto-generated catch block

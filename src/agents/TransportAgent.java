@@ -47,16 +47,16 @@ public class TransportAgent extends WorkingAgent {
 	@Override
 	public Serializable search(Request request){
 		
-		if(request.transport != "false"){
+		if(!request.transport.equals("private car")){
 			System.out.println("Recherche d'un transport");
-			return Transport.getTransport("Iasi",request.city,request.dateBegin,request.dateEnd,false);
+			return Transport.getTransport("Iasi",request.city,request.dateBegin,request.dateEnd, request.transport,false);
 		}
 		
 		System.out.println("Private car");
 		
 		Transport[] array = {new Transport("Private car","Iasi",request.city,request.dateBegin,-1,0), new Transport("Private car",request.city,"Iasi",request.dateBegin,-1,0)};
 		
-		System.out.println(array[1]);
+		//System.out.println(array[1]);
 		
 		return array;
 		

@@ -14,6 +14,8 @@ public class Trip{
 	public Date dateBegin;
 	public Date dateEnd;
 	public int price;
+	
+	public boolean corrupted = false;
 
 	public Trip(){
 		
@@ -50,5 +52,9 @@ public class Trip{
 	
 	public void increasePrice(int val){
 		price += val;
+	}
+	
+	public void setCorrupted(boolean bol){
+		corrupted = bol;
 	}
 }

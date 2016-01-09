@@ -52,7 +52,7 @@ public class Initiate extends OneShotBehaviour
 	
 	        ag1.start();
 	        ag2.start();
-	        //ag3.start();
+	        ag3.start();
 		} catch (StaleProxyException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

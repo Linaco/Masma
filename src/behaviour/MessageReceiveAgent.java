@@ -57,21 +57,35 @@ public class MessageReceiveAgent extends CyclicBehaviour
                     
                     
                     //Answer
-                    ACLMessage reply = new ACLMessage(ACLMessage.PROPOSE);
-                    try {
-            			Request request = (Request) message.getContentObject();
-            			reply.setContentObject(myAgent.search(request));
-            		} catch (UnreadableException | IOException e) {
-            			// TODO Auto-generated catch block
-            			e.printStackTrace();
-            		}
-
-                    reply.addReceiver(senderAID);
-                    
-                    myAgent.send(reply);
-
                     GlobalCounter.Increment();
-                    stringToDisplay = "Replying to " + senderName + " with message: [PROPOSE]";
+                    stringToDisplay = "Replying to " + senderName;
+                    ACLMessage reply;
+                    Object temp = null;
+                    
+                    
+					Request request;
+					try {
+						request = (Request) message.getContentObject();
+						temp = myAgent.search(request);
+						
+						 if (temp != null){
+		                    	reply = new ACLMessage(ACLMessage.PROPOSE);
+		                    	stringToDisplay += " with message: [PROPOSE]";
+		                   } else {
+		                    	reply = new ACLMessage(ACLMessage.FAILURE);
+		                    	stringToDisplay += " with message: [FAILURE]";
+		                    }
+						 reply.addReceiver(senderAID);
+
+						 myAgent.send(reply);
+		                    
+		                 myAgent.windowsForm.AddTextLine(GlobalCounter.Get() + " " + stringToDisplay);
+					} catch (UnreadableException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+            			
+                    
                     myAgent.windowsForm.AddTextLine(GlobalCounter.Get() + " " + stringToDisplay);
 
                     break;

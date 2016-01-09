@@ -24,6 +24,8 @@ public class PersonnalAgent extends WorkingAgent {
 	public AID providerAID = null;
 	
 	public Request request = new Request();
+	
+	public int state = 0; //0 - none / 1 - transport / / 3 - transport + activities + hotel
 
 	private Agent hotel;
 	private Agent transport;
@@ -47,6 +49,8 @@ public class PersonnalAgent extends WorkingAgent {
 	}
 
 	public void init(String text) {
+		//reset state -> new request
+		state = 0;
 		getRequest(text);
 		addBehaviour(new Initiate(this));
 		
@@ -73,5 +77,13 @@ public class PersonnalAgent extends WorkingAgent {
 		}
 		
 		//System.out.println(request);
+	}
+	
+	//Check the state of the request
+	public void checkTrip(){
+		if(state == 3){
+			//print trip
+			windowsForm.AddTextLine(trip.toString());
+		}
 	}
 }

@@ -34,6 +34,15 @@ public class Activities implements Serializable {
 		activities.add(this);
 	}
 	
+	public Activities(String city, String name, String description, Date dateBegin, Date dateEnd, int price){
+		this.dateBegin = dateBegin;
+		this.dateEnd = dateEnd;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.city = city;
+	}
+	
 	public String toString(){
 		return name + " : " + description + ". " + price +"€ [" + city + "] " + dateBegin + " to " + dateEnd;
 	}
@@ -42,16 +51,17 @@ public class Activities implements Serializable {
 		List<Activities> map = new ArrayList<Activities>();
 		
 		for(int i = 0; i < activities.size(); i++){
-			if(activities.get(i).city.equals(city) && activities.get(i).price <= price ){
+			if(activities.get(i).city.equals(city) && activities.get(i).availabilty(dateBegin, dateEnd) && activities.get(i).price <= price ){
 				map.add(activities.get(i));
 			}
 		}
-		
-		return toArray(sortList(map));
+		return toArray(map);
+		//return toArray(sortList(map));
 	}
 
 	private static Activities[] toArray(List<Activities> sortList) {
 		Activities[] activities2 = new Activities[sortList.size()];
+		//activities2[0] = new Activities("","Not found","N/A",new Date(), new Date(), -1);
 		
 		for(int i = 0; i < sortList.size(); i++){
 			activities2[i] = sortList.get(i);
@@ -83,5 +93,15 @@ public class Activities implements Serializable {
 		
 		return sortedMap;		
 		
+	}
+	
+	//return boolean regarding the availability of the activity
+	//d1 & d2 date of begin and end of trip
+	private boolean availabilty(Date d1, Date d2){
+		if( d2.after(this.dateBegin) && d1.before(this.dateEnd)){
+			return true;
+		}
+		
+		return false;
 	}
 }

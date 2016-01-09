@@ -42,8 +42,21 @@ public class Hotel implements Serializable{
 
 	}
 	
+	public Hotel(String name, String city, Date dateBegin, Date dateEnd){
+		SimpleDateFormat ft = new SimpleDateFormat("dd.MM.yyyy");
+		this.dateBegin = dateBegin;
+		this.dateEnd = dateEnd;
+
+		this.name = name;
+		this.price = -1;
+		this.numberOfRooms = -1;
+		this.numberOfBeds = -1;
+		this.range = -1;
+		this.city = city;
+	}
+	
 	public String toString(){
-		return name + " : " + price + "€. " + range + "* [" + city + "] " + dateBegin + " to " + dateEnd;
+		return name + " : from" + price + "€/night. " + range + "* [" + city + "] " + dateBegin + " to " + dateEnd;
 	}
 	
 	public static Hotel getHotel(String city, int priceBase, Date dateBe, Date dateEn, int range){
@@ -53,7 +66,7 @@ public class Hotel implements Serializable{
 		
 		//for(int i = lastIndex; i < hotels.size(); i++){
 		for(int i = 0; i < hotels.size(); i++){
-			if(hotels.get(i).price(dateBe, dateEn) <= price){
+			if( hotels.get(i).city.equals(city) && hotels.get(i).availabilty(dateBe, dateEn) && hotels.get(i).price(dateBe, dateEn) <= price && hotels.get(i).range >= range){
 				//lastIndex = i + 1;
 				price = hotels.get(i).price(dateBe, dateEn);
 				lastHotel = hotels.get(i);
