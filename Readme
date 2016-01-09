@@ -12,6 +12,6 @@ Search : Hotel -> Transport -> Activities
 Argument : 	Iasi	25.12.2015-02.01.2015	false/true	2	3	2	1000-2000	plane/train/private
 		City	Date			Flexible	NbrRms	NbrPpl	NbrSta	Price range	Transport
 
-Bacau,10.10.2015,15.10.2015,true,2,3,2,1000,2000,plane
+Bacau,10.10.2015,15.10.2015,true,2,3,2,1000,2000,train
 
 

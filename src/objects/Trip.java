@@ -11,8 +11,8 @@ public class Trip{
 	public Transport transportBack;
 	public List<Activities> activities = new ArrayList<Activities>();
 
-	public Date dateBegin;
-	public Date dateEnd;
+	//public Date dateBegin;
+	//public Date dateEnd;
 	public int price;
 	
 	public boolean corrupted = false;
@@ -21,7 +21,7 @@ public class Trip{
 		
 	}
 
-	public Trip(String dateBegin, String dateEnd, int price){
+	/*public Trip(String dateBegin, String dateEnd, int price){
 		SimpleDateFormat ft = new SimpleDateFormat("dd.MM.yyyy");
 		try {
 			this.dateBegin = ft.parse(dateBegin);
@@ -32,6 +32,22 @@ public class Trip{
 
 		this.price = price;
 
+	}*/
+	
+	@Override
+	public String toString(){
+		String line = "Trip to " + hotel.city + " from " + hotel.dateBegin + " to " + hotel.dateEnd;
+		String go = "Going by " + transportGo.name + " on " + hotel.dateBegin + " : " + transportGo.date + ". for " + transportGo.price + "€.";
+		String hotl = "Staying at " + hotel.name + " for " + hotel.price + "€ per night and per person.";
+		String back = "Coming back by " + transportBack.name + " on " + hotel.dateEnd + " : " + transportGo.date + ". for " + transportGo.price + "€.";
+		String activity = "-----------Activities :\n";
+		
+		for(int i = 0; i < activities.size(); i++){
+			activity += activities.get(i).toString() + "\n";
+		}
+		
+		String br = "\n";
+		return "-------------------\n-------Trip--------\n-------------------\n" + line + br + go + br + hotl + br + back + br + activity + "\n\nTotal price :" + price + "€";
 	}
 
 	public void setHotel(Hotel hotel){

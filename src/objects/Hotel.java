@@ -59,24 +59,25 @@ public class Hotel implements Serializable{
 		return name + " : from" + price + "€/night. " + range + "* [" + city + "] " + dateBegin + " to " + dateEnd;
 	}
 	
-	public static Hotel getHotel(String city, int priceBase, Date dateBe, Date dateEn, int range){
+	public static Hotel getHotel(String city, int priceBase, Date dateBe, Date dateEn, int range, int numbPpl){
 		//lastIndex in case of previous proposal isn't accepted
 		Hotel lastHotel = null;
 		int price = priceBase;
 		
 		//for(int i = lastIndex; i < hotels.size(); i++){
-		for(int i = 0; i < hotels.size(); i++){
-			if( hotels.get(i).city.equals(city) && hotels.get(i).availabilty(dateBe, dateEn) && hotels.get(i).price(dateBe, dateEn) <= price && hotels.get(i).range >= range){
+		for(int i = lastIndex; i < hotels.size(); i++){
+			if( hotels.get(i).city.equals(city) && hotels.get(i).availabilty(dateBe, dateEn) && hotels.get(i).price(dateBe, dateEn, numbPpl) <= price && hotels.get(i).range >= range){
 				//lastIndex = i + 1;
-				price = hotels.get(i).price(dateBe, dateEn);
+				//price = hotels.get(i).price(dateBe, dateEn, numbPpl);
 				lastHotel = hotels.get(i);
+				return lastHotel;
 			}
 		}
 		return lastHotel;
 	}
 
 	//compute the price of the stay regarding the number of day stayed and the days stayed
-	private int price(Date dateBe, Date dateEn) {
+	public int price(Date dateBe, Date dateEn, int nmbPpl) {
 		int result = 0;
 		
 		while( !dateBe.after(dateEn)){
@@ -90,12 +91,7 @@ public class Hotel implements Serializable{
 			dateBe.setDate(dateBe.getDate() + 1);
 		}
 		
-		return result;
-	}
-	
-	//number of days between two date
-	private int daysBetween(Date d1, Date d2){
-        return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+		return (result * nmbPpl);
 	}
 	
 	//return boolean regarding the availability of the hotel

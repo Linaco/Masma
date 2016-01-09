@@ -61,4 +61,9 @@ public class TransportAgent extends WorkingAgent {
 		return array;
 		
 	}
+	
+	@Override
+	public Serializable getNewDate(Request request){
+		return Transport.getNewDate("Iasi", request.city, request.dateBegin, request.dateEnd, request.transport);
+	}
 }

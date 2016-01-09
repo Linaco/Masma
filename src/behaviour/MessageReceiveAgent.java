@@ -45,10 +45,10 @@ public class MessageReceiveAgent extends CyclicBehaviour
             
             GlobalCounter.Increment();
             String stringToDisplayReceive = GlobalCounter.Get() + " " + "Received from " + senderName + " message: ";
-            myAgent.windowsForm.AddTextLine(stringToDisplayReceive + "[]");
             
             GlobalCounter.Increment();
             String stringToDisplay = GlobalCounter.Get() + "Replying to " + senderName;
+            ACLMessage reply;
 
             switch (message.getPerformative())
             {
@@ -60,7 +60,7 @@ public class MessageReceiveAgent extends CyclicBehaviour
                     
                     
                     //Answer
-                    ACLMessage reply;
+                    
                     Object temp = null;
                     
                     
@@ -73,8 +73,14 @@ public class MessageReceiveAgent extends CyclicBehaviour
 		                    	reply = new ACLMessage(ACLMessage.PROPOSE);
 		                    	stringToDisplay += " with message: [PROPOSE]";
 		                   } else {
-		                    	reply = new ACLMessage(ACLMessage.FAILURE);
-		                    	stringToDisplay += " with message: [FAILURE]";
+		                	   if(myAgent.getLocalName().equals("Transport") || myAgent.getLocalName().equals("Hotel")){
+		                		   reply = new ACLMessage(ACLMessage.REQUEST);
+		                		   stringToDisplay += " with message: [REQUEST]";
+		                		   temp = myAgent.getNewDate(request);
+		                	   } else {		      
+			                    	reply = new ACLMessage(ACLMessage.FAILURE);
+			                    	stringToDisplay += " with message: [FAILURE]";
+		                	   }
 		                    }
 						 reply.setContentObject((Serializable) temp);
 						 reply.addReceiver(senderAID);
@@ -109,6 +115,25 @@ public class MessageReceiveAgent extends CyclicBehaviour
                     myAgent.windowsForm.AddTextLine(stringToDisplay);
                     //shutdown
                 	myAgent.doDelete();
+                	break;
+                	
+                case ACLMessage.AGREE:
+                	//Agree the request
+                	myAgent.windowsForm.AddTextLine(stringToDisplayReceive + "[AGREE]");
+                	break;
+                
+                case ACLMessage.REFUSE:
+                	//Refuse the request
+                	myAgent.windowsForm.AddTextLine(stringToDisplayReceive + "[REFUSE]");
+                	//No possibilty, send failure
+                	reply = new ACLMessage(ACLMessage.FAILURE);
+			        stringToDisplay += " with message: [FAILURE]";
+					reply.addReceiver(senderAID);
+
+					myAgent.send(reply);
+		                    
+		            myAgent.windowsForm.AddTextLine(stringToDisplay);
+                	
                 	break;
 
                 default:

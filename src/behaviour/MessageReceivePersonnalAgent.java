@@ -50,10 +50,10 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
             
             GlobalCounter.Increment();
             String stringToDisplayReceive = GlobalCounter.Get() + " " + "Received from " + senderName + " message: ";
-            myAgent.windowsForm.AddTextLine(stringToDisplayReceive + "[]");
             
             GlobalCounter.Increment();
             String stringToDisplay = GlobalCounter.Get() + "Replying to " + senderName;
+            ACLMessage reply;
 
             switch (message.getPerformative())
             {
@@ -177,8 +177,36 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
                 case ACLMessage.REQUEST:
                 	//Ask to change the date
                 	myAgent.windowsForm.AddTextLine(stringToDisplayReceive + "[REQUEST]");
-
-
+                	reply = new ACLMessage(ACLMessage.REFUSE);
+                	String mess = "[REFUSE]";
+                	
+                	if(myAgent.request.flexible.equals("true")){
+                		if(Math.random() >= 0.8){
+                			try {
+                    			Date[] newDate = (Date[]) message.getContentObject();
+                    			myAgent.request.dateBegin = newDate[0];
+                    			myAgent.request.dateEnd = newDate[1];
+                    			reply = new ACLMessage(ACLMessage.AGREE);
+                    			mess = "[AGREE]";
+                    		} catch (UnreadableException e) {
+                    			e.printStackTrace();
+                    		}
+                		} else {
+                		}
+                	} else {
+                	}
+                	
+                	//Say that agree or REFUSE
+                	myAgent.windowsForm.AddTextLine(GlobalCounter.Get() + " Sending to sender" + senderAID.getLocalName() + " message: " + mess);
+                	
+                	reply.addReceiver(senderAID);
+                	myAgent.send(reply);
+                	
+                	GlobalCounter.Increment();
+                	
+                	sendCFP(senderAID);
+                	break;
+                	
                 default:
                     break;
             }
@@ -213,7 +241,7 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
 			myAgent.windowsForm.AddTextLine("-----------------Hotel----------");
 			Hotel hotel = (Hotel) message.getContentObject();
 			myAgent.trip.setHotel(hotel);
-			myAgent.trip.increasePrice(hotel.price);
+			myAgent.trip.increasePrice(hotel.price(myAgent.request.dateBegin, myAgent.request.dateEnd, myAgent.request.nbrPpl));
 			myAgent.windowsForm.AddTextLine(hotel.toString() + "\n");
 		
 		} catch (UnreadableException e) {

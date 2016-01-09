@@ -14,7 +14,9 @@ public class Transport implements Serializable{
 	public Date date;
 	public int price;
 	public int range;
-
+	
+	public static int indexGo;
+	public static int indexBack;
 
 
 	public Transport(String name, String from, String destination, String date, int range, int price){
@@ -55,19 +57,21 @@ public class Transport implements Serializable{
 		int lastPrice = 99999;
 		
 		
-		for (int i = 0; i < transports.size() ; i++){
+		for (int i = indexGo; i < transports.size() ; i++){
 			if(transports.get(i).from.equals(from) && transports.get(i).destination.equals(city) && transports.get(i).price <= lastPrice && transports.get(i).name.equals(mean) ){
-				lastPrice = transports.get(i).price;
+				//lastPrice = transports.get(i).price;
 				transport[0] = transports.get(i);
+				i = transports.size();
 			}
 		}
 		
 		lastPrice = 99999;
 		
-		for (int i = 0; i < transports.size() ; i++){
+		for (int i = indexBack; i < transports.size() ; i++){
 			if(transports.get(i).from.equals(city) && transports.get(i).destination.equals(from) && transports.get(i).price <= lastPrice  && transports.get(i).name.equals(mean)){
-				lastPrice = transports.get(i).price;
+				//lastPrice = transports.get(i).price;
 				transport[1] = transports.get(i);
+				i = transports.size();
 			}
 		}
 		
@@ -76,5 +80,29 @@ public class Transport implements Serializable{
 		}
 		
 		return transport;
+	}
+	
+	//Will give the best date if no transport exist
+	public static Date[] getNewDate(String from, String city, Date d1, Date d2, String mean){
+		Date[] array = new Date[2];
+		int go = 3;
+		int back = 3;
+		
+		for (int i = 0; i < transports.size() ; i++){
+			if(transports.get(i).from.equals(from) && transports.get(i).destination.equals(city) && transports.get(i).name.equals(mean)){
+				if(Math.abs(Util.daysBetween(d1, transports.get(i).date)) <= Math.abs(go) ){
+					array[0] = transports.get(i).date;
+					go = Util.daysBetween(d1, transports.get(i).date);	
+				}
+			}
+			if(transports.get(i).from.equals(city) && transports.get(i).destination.equals(from) && transports.get(i).name.equals(mean)){
+				if(Math.abs(Util.daysBetween(d2, transports.get(i).date)) <= Math.abs(back) ){
+					array[1] = transports.get(i).date;
+					back = Util.daysBetween(d2, transports.get(i).date);	
+				}
+			}
+		}
+		
+		return array;
 	}
 }

@@ -36,4 +36,9 @@ public abstract class WorkingAgent extends Agent {
 		windowsForm.setVisible(false); //you can't see me!
 		windowsForm.dispose();;
 	}
+
+	public Object getNewDate(Request request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
