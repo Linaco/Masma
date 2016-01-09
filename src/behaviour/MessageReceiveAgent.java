@@ -42,7 +42,13 @@ public class MessageReceiveAgent extends CyclicBehaviour
             
             AID senderAID = message.getSender();
             String senderName = senderAID.getLocalName();
-            String stringToDisplay = "";
+            
+            GlobalCounter.Increment();
+            String stringToDisplay = GlobalCounter.Get() + " " + "Received from " + senderName + " message: " + message.getPerformative();
+            myAgent.windowsForm.AddTextLine(stringToDisplay);
+            
+            GlobalCounter.Increment();
+            stringToDisplay = GlobalCounter.Get() + "Replying to " + senderName;
 
             switch (message.getPerformative())
             {
@@ -50,15 +56,9 @@ public class MessageReceiveAgent extends CyclicBehaviour
                     //Personnal agent call for a proposition of service
                 	System.out.println("CFP");
 
-                    GlobalCounter.Increment();
-                    stringToDisplay += GlobalCounter.Get() + " " + "Received from " + senderName + " message: [CFP]";
-                    myAgent.windowsForm.AddTextLine(stringToDisplay);
-                    
                     
                     
                     //Answer
-                    GlobalCounter.Increment();
-                    stringToDisplay = "Replying to " + senderName;
                     ACLMessage reply;
                     Object temp = null;
                     
@@ -68,32 +68,29 @@ public class MessageReceiveAgent extends CyclicBehaviour
 						request = (Request) message.getContentObject();
 						temp = myAgent.search(request);
 						
-						 if (temp != null){
+						 if (temp != (Serializable) null){
 		                    	reply = new ACLMessage(ACLMessage.PROPOSE);
 		                    	stringToDisplay += " with message: [PROPOSE]";
 		                   } else {
 		                    	reply = new ACLMessage(ACLMessage.FAILURE);
 		                    	stringToDisplay += " with message: [FAILURE]";
 		                    }
+						 reply.setContentObject((Serializable) temp);
 						 reply.addReceiver(senderAID);
 
 						 myAgent.send(reply);
 		                    
-		                 myAgent.windowsForm.AddTextLine(GlobalCounter.Get() + " " + stringToDisplay);
-					} catch (UnreadableException e) {
+		                 myAgent.windowsForm.AddTextLine(stringToDisplay);
+					} catch (UnreadableException | IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-            			
-                    
-                    myAgent.windowsForm.AddTextLine(GlobalCounter.Get() + " " + stringToDisplay);
 
                     break;
 
                 case ACLMessage.AGREE:
                     //Receive agreement about the proposition
-                	GlobalCounter.Increment();
-                    stringToDisplay += GlobalCounter.Get() + " " + "Received from " + senderName + " message: [AGREE]\nShutting down";
+                    stringToDisplay = "Shutting down";
                     myAgent.windowsForm.AddTextLine(stringToDisplay);
                     //shutdown
                 	myAgent.doDelete();
@@ -102,6 +99,12 @@ public class MessageReceiveAgent extends CyclicBehaviour
                 case ACLMessage.REFUSE:
                     //Personnal agent refuses the proposition
                     //agent has to try again
+                	
+                	//Shutting down
+                	stringToDisplay = "Shutting down";
+                    myAgent.windowsForm.AddTextLine(stringToDisplay);
+                    //shutdown
+                	myAgent.doDelete();
                 	break;
 
                 default:

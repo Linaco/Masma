@@ -43,35 +43,24 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-        	
-            /*String s = message.getContent() + " from " + message.getSender().getLocalName();
-            myAgent.frame.AddTextLine(s);
-            
-            ACLMessage answer = new ACLMessage();
-            answer.addReceiver(message.getSender());
-            answer.setContent("(Message :id 1)");
-            answer.setConversationId("ID1"); // "ID1" will have to be matched by any agents receiving the message
-            myAgent.send(answer);
-            
-            answer.setContent("(Message :id 2)");
-            answer.setConversationId("ID2");
-            myAgent.send(answer);*/
+    
 
-            AID senderAID = message.getSender();
+        	AID senderAID = message.getSender();
             String senderName = senderAID.getLocalName();
-            String stringToDisplay = "";
+            
+            GlobalCounter.Increment();
+            String stringToDisplay = GlobalCounter.Get() + " " + "Received from " + senderName + " message: " + message.getPerformative();
+            myAgent.windowsForm.AddTextLine(stringToDisplay);
+            
+            GlobalCounter.Increment();
+            stringToDisplay = GlobalCounter.Get() + "Replying to " + senderName;
 
             switch (message.getPerformative())
             {
                 case ACLMessage.INFORM:
                     //Agent says it exist
-                	GlobalCounter.Increment();
-                    
-                    stringToDisplay += GlobalCounter.Get() + " " + "Received from " + senderName + " message: [INFORM]";
-                    myAgent.windowsForm.AddTextLine(stringToDisplay);
                 	
                     //Wait until transportAgent answers for a proposal
-                    System.out.println(senderName);
                 	if (senderName.equals("Transport") || answer){
                 		
                         sendCFP(senderAID);
@@ -106,10 +95,6 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
                 case ACLMessage.PROPOSE:
                     //Receive proposition from agent about a price
                 	
-                	GlobalCounter.Increment();
-                    stringToDisplay += GlobalCounter.Get() + " " + "Received from " + senderName + " message: [PROPOSE]";
-                    myAgent.windowsForm.AddTextLine(stringToDisplay);
-                	
                     switch (senderName)
             		{
             			case "Activities":
@@ -128,9 +113,11 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
             			default:
             				break;
             		}
-                	        	
+                	
+                    //To say that "transportAgent" answer. Then if other agent "INFORM" PersonnalAgent can anwser directly
                  	answer = true;
                 	
+                 	//In case agent is waiting for an answer, this will send them the CFP
                 	if(activitiesIsWaiting){
                 		sendCFP(activitiesAID);
                 		activitiesIsWaiting = false;
@@ -141,15 +128,15 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
                 		hotelIsWaiting = false;
                 	}
                 	
+                	//Accept the proposition
+    				sendConfirm(senderAID);
+                	
                 	//Check if the trip is complete then print it
                 	myAgent.checkTrip();
                 	break;
 
                 case ACLMessage.FAILURE:
                     //Agent couldn't find something with give properties
-                	GlobalCounter.Increment();
-                    stringToDisplay += GlobalCounter.Get() + " " + "Received from " + senderName + " message: [FAILURE]";
-                    myAgent.windowsForm.AddTextLine(stringToDisplay);
                     
                     //The trip won't be good because something is bad
                     myAgent.trip.setCorrupted(true);
@@ -203,7 +190,7 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
 
 	private void transportFail() {
 		myAgent.trip.setTransportGo(new Transport("Not Found", "Iasi", myAgent.request.city, myAgent.request.dateBegin, -1, 0));
-		myAgent.trip.setTransportGo(new Transport("Not Found", myAgent.request.city, "Iasi", myAgent.request.dateEnd, -1, 0));		
+		myAgent.trip.setTransportBack(new Transport("Not Found", myAgent.request.city, "Iasi", myAgent.request.dateEnd, -1, 0));		
 	}
 
 	private void hotelFail() {
@@ -214,25 +201,9 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
 		myAgent.trip.addActivities(new Activities("","Not found","N/A",new Date(), new Date(), -1));
 	}
 
-	private void sendConfirm(AID senderAID) {
-		ACLMessage toSend = new ACLMessage(ACLMessage.AGREE);
-
-        String stringToDisplay = "Sending to ";
-
-        toSend.addReceiver(senderAID);
-        myAgent.send(toSend);
-
-        stringToDisplay += senderAID.getLocalName() + " message: [AGREE]";
-
-        GlobalCounter.Increment();
-        
-        //One proposition is accepted and added to the trip
-        //Increase the state of principalAgent
-        myAgent.state++;
-        myAgent.windowsForm.AddTextLine(GlobalCounter.Get() + " " + stringToDisplay);
-		
-	}
-
+	
+//-------------------------------------------------
+//When message has object to add to the TripObject (of Personnal Agent)
 	private void hotelMessage(ACLMessage message) {
 		try {
 			myAgent.windowsForm.AddTextLine("-----------------Hotel----------");
@@ -245,8 +216,6 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		sendConfirm(message.getSender());
 		
 	}
 
@@ -264,8 +233,6 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		sendConfirm(message.getSender());
 	}
 
 	private void transportMessage(ACLMessage message) {
@@ -287,10 +254,11 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
 			e.printStackTrace();
 		}
 		
-		sendConfirm(message.getSender());
-		
 	}
-
+	
+	
+//---------------------------------------------------
+//Send Message
 	private void sendCFP(AID aid) {
 		String stringToDisplay = "Replying to " + aid.getLocalName() + " with message: [CFP]";
 
@@ -307,6 +275,20 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
         myAgent.send(reply);
 
         myAgent.windowsForm.AddTextLine(GlobalCounter.Get() + " " + stringToDisplay);
+		
+	}
+	
+	private void sendConfirm(AID senderAID) {
+		ACLMessage toSend = new ACLMessage(ACLMessage.AGREE);
+		
+		toSend.addReceiver(senderAID);
+
+        myAgent.windowsForm.AddTextLine(GlobalCounter.Get() + " Sending to sender" + senderAID.getLocalName() + " message: [AGREE]");
+        myAgent.send(toSend);
+        
+        //One proposition is accepted and added to the trip
+        //Increase the state of principalAgent
+        myAgent.state++;
 		
 	}
 }

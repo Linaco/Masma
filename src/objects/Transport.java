@@ -71,6 +71,10 @@ public class Transport implements Serializable{
 			}
 		}
 		
+		if(transport[0] == null || transport[1] == null) {
+			return null;
+		}
+		
 		return transport;
 	}
 }
