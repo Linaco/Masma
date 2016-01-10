@@ -1,5 +1,10 @@
-
 package behaviour;
+/**
+ * @author Linaco
+ * 
+ * Will initiate all agent from the personnalAgent
+ * 
+ */
 
 import agents.PersonnalAgent;
 import jade.core.AID;
@@ -62,10 +67,12 @@ public class Initiate extends OneShotBehaviour
 		}
     }
     
+    //reset all useful value
     private void init() {
 		Hotel.lastIndex = 0;
 		Transport.indexBack = 0;
 		Transport.indexGo = 0;
+		myAgent.trip.activities.clear();
 	}
 
 	private static AgentController CreateAgent(AgentContainer container, String agentName, String agentClass, Object[] args) throws StaleProxyException {

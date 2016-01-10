@@ -1,5 +1,9 @@
 package init;
-
+/**
+ * @author Linaco
+ * Populate the dataBase.
+ * Hotel, Transport, Activities with csv files
+ */
 import objects.*;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -8,7 +12,7 @@ import java.io.IOException;
 
 public class InitObjects{
 
-	static String csvFile = "/home/leo/Documents/Masma/TripCompany/src/objects/";
+	static String csvFile = "/home/leo/Documents/Masma/TripCompany/src/objects/"; //adress of the directory with csv file for data
 
 	public static void InitHotel(){
 
@@ -94,6 +98,7 @@ public class InitObjects{
 		}
 	}
 	
+	//To print everything to check if it works well
 	public static void printAll(){
 		for(int i=0; i < Activities.activities.size(); i++){
 			System.out.println(Activities.activities.get(i));

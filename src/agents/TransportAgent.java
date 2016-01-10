@@ -9,22 +9,15 @@ package agents;
  * @author Linaco
  */
 import jade.core.AID;
-import jade.core.Agent;
-import jade.core.behaviours.CyclicBehaviour;
-import jade.core.behaviours.OneShotBehaviour;
-import jade.domain.FIPAException;
-import jade.lang.acl.ACLMessage;
 import objects.Request;
 import objects.Transport;
 
 import java.io.Serializable;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import util.AgentFrame;
 import behaviour.*;
 
+//Agent in charge of searching the transport
 public class TransportAgent extends WorkingAgent {
 
 	

@@ -5,6 +5,7 @@ import java.text.*;
 import java.util.ArrayList;
 import java.util.List;
 
+//Trip object to be populated during the search
 public class Trip{
 	public Hotel hotel;
 	public Transport transportGo;
@@ -34,6 +35,7 @@ public class Trip{
 
 	}*/
 	
+	//Override method to print the whole trip
 	@Override
 	public String toString(){
 		String line = "Trip to " + hotel.city + " from " + hotel.dateBegin + " to " + hotel.dateEnd;
@@ -50,6 +52,8 @@ public class Trip{
 		return "-------------------\n-------Trip--------\n-------------------\n" + line + br + go + br + hotl + br + back + br + activity + "\n\nTotal price :" + price + "€";
 	}
 
+	
+	//Get & Set
 	public void setHotel(Hotel hotel){
 		this.hotel = hotel;
 	}

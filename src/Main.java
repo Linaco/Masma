@@ -6,6 +6,7 @@ public class Main {
 
     public static void main(String[] args) throws ControllerException, InterruptedException 
     {
+    	//Populate the dataBase
     	InitObjects.InitActivities();
     	InitObjects.InitHotel();
     	InitObjects.InitTransport();

@@ -17,13 +17,12 @@ import jade.wrapper.ControllerException;
 import jade.wrapper.StaleProxyException;
 import util.AgentFrame;
 
+//To init the app -> just create the main container and the personnalAgent which will wait the request
 public class MASInit {
 	public static void DoInitialization() throws ControllerException, InterruptedException {
 		// create main container
 		jade.wrapper.AgentContainer mainContainer = CreateContainer("TripCompany", true, "localhost", "", "1089");
 		mainContainer.start();
-
-		//Import data
 
 
 		//Create frame of agents

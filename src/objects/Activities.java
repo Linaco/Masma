@@ -4,9 +4,10 @@ import java.util.*;
 import java.io.Serializable;
 import java.text.*;
 
+//Activities object
 public class Activities implements Serializable {
 	
-	public static List<Activities> activities = new ArrayList<Activities>();
+	public static List<Activities> activities = new ArrayList<Activities>(); //DataBase for activities
 	
 	public String name;
 	public String description;
@@ -16,7 +17,7 @@ public class Activities implements Serializable {
 	public String city;
 
 
-
+	//Create an object and add it to the datebase
 	public Activities(String city, String name, String description, String dateBegin, String dateEnd, int price){
 		SimpleDateFormat ft = new SimpleDateFormat("dd.MM.yyyy");
 		try {
@@ -34,6 +35,7 @@ public class Activities implements Serializable {
 		activities.add(this);
 	}
 	
+	//Create an object without adding it to the dataBase -> usefull to manipulate the object
 	public Activities(String city, String name, String description, Date dateBegin, Date dateEnd, int price){
 		this.dateBegin = dateBegin;
 		this.dateEnd = dateEnd;
@@ -43,10 +45,12 @@ public class Activities implements Serializable {
 		this.city = city;
 	}
 	
+	//print object
 	public String toString(){
 		return name + " : " + description + ". " + price +"€ [" + city + "] " + dateBegin + " to " + dateEnd;
 	}
 	
+	//Search list of activities and return an array
 	public static Activities[] getListActivities(String city, Date dateBegin, Date dateEnd, int price){
 		List<Activities> map = new ArrayList<Activities>();
 		
@@ -59,6 +63,7 @@ public class Activities implements Serializable {
 		//return toArray(sortList(map));
 	}
 
+	//Transform the list into an array
 	private static Activities[] toArray(List<Activities> sortList) {
 		Activities[] activities2 = new Activities[sortList.size()];
 		//activities2[0] = new Activities("","Not found","N/A",new Date(), new Date(), -1);
@@ -70,6 +75,7 @@ public class Activities implements Serializable {
 		return activities2;
 	}
 
+	//Sort the list by increasing price
 	private static List<Activities> sortList(List<Activities> map) {
 		List<Activities> sortedMap = new ArrayList<Activities>();
 		

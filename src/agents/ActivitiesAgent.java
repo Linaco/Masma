@@ -1,25 +1,15 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package agents;
 
 /**
  *
  * @author Linaco
+ * 
+ * Agent in charge of activities
  */
 import jade.core.AID;
-import jade.core.Agent;
-import jade.core.behaviours.CyclicBehaviour;
-import jade.core.behaviours.OneShotBehaviour;
-import jade.domain.FIPAException;
-import jade.lang.acl.ACLMessage;
 import objects.*;
 
 import java.io.Serializable;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import behaviour.*;
 import util.AgentFrame;
@@ -37,11 +27,13 @@ public class ActivitiesAgent extends WorkingAgent {
 		windowsForm.setTitle(this.getName());
 		windowsForm.setVisible(true);
 		
+		//Add behavior to agent
 		addBehaviour(new WindowRefresh(this,1000));
 		addBehaviour(new MessageReceiveAgent(this));
 		addBehaviour(new InitiatorSend(this));		
 	}
 	
+	//Search object regarding the request
 	@Override
 	public Serializable search(Request request){
 		

@@ -4,10 +4,11 @@ import java.util.*;
 import java.io.Serializable;
 import java.text.*;
 
+//Hotel object
 public class Hotel implements Serializable{
 
-	public static List<Hotel> hotels = new ArrayList<Hotel>();
-	public static int lastIndex = 0;
+	public static List<Hotel> hotels = new ArrayList<Hotel>(); //static list = dateBase
+	public static int lastIndex = 0; //the search will take the first hotel to go. In case the personnal agent refuse, the search will search since this index
 
 	public String name;
 	public String city;
@@ -18,9 +19,9 @@ public class Hotel implements Serializable{
 	public int numberOfRooms;
 	public int range;
 	
-	private double pourcentageWE = 1.3;
+	private double pourcentageWE = 1.3; //To increase the price during the week end
 	
-	
+	//Create an object and add it to the datebase
 	public Hotel(String name, String city, String dateBegin, String dateEnd, int numberOfBeds, int numberOfRooms, int range, int price){
 		SimpleDateFormat ft = new SimpleDateFormat("dd.MM.yyyy");
 		try {
@@ -42,6 +43,7 @@ public class Hotel implements Serializable{
 
 	}
 	
+	//Create an object without adding it to the dataBase -> usefull to manipulate the object
 	public Hotel(String name, String city, Date dateBegin, Date dateEnd){
 		SimpleDateFormat ft = new SimpleDateFormat("dd.MM.yyyy");
 		this.dateBegin = dateBegin;
@@ -55,10 +57,12 @@ public class Hotel implements Serializable{
 		this.city = city;
 	}
 	
+	//Print the object
 	public String toString(){
 		return name + " : from" + price + "€/night. " + range + "* [" + city + "] " + dateBegin + " to " + dateEnd;
 	}
 	
+	//Search the hotel regarding the given value
 	public static Hotel getHotel(String city, int priceBase, Date dateBe, Date dateEn, int range, int numbPpl){
 		//lastIndex in case of previous proposal isn't accepted
 		Hotel lastHotel = null;

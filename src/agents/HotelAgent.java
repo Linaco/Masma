@@ -7,6 +7,7 @@ package agents;
 /**
  *
  * @author Linaco
+ * Agent in charge of manipulate request to find a Hotel
  */
 import jade.core.AID;
 import jade.core.Agent;
@@ -40,13 +41,13 @@ public class HotelAgent extends WorkingAgent {
 		windowsForm.setTitle(this.getName());
 		windowsForm.setVisible(true);
 		
-		Hotel.lastIndex = 0;
-		
+		//Add behavior
 		addBehaviour(new WindowRefresh(this,1000));
 		addBehaviour(new MessageReceiveAgent(this));
 		addBehaviour(new InitiatorSend(this));
 	}
 	
+	//Search object regarding the request
 	@Override
 	public Serializable search(Request request){
 		

@@ -1,6 +1,8 @@
-
 package behaviour;
-
+/**
+ * Main behavior to receive message from Agent
+ * Behavior for PersonnalAgent
+ */
 import java.io.IOException;
 import java.util.Date;
 
@@ -96,7 +98,7 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
                 case ACLMessage.PROPOSE:
                     //Receive proposition from agent about a price
                 	myAgent.windowsForm.AddTextLine(stringToDisplayReceive + "[PROPOSE]");
-                	if(Math.random() >= 0.8){
+                	if(Math.random() >= 0.5){
                 		//Accept Proposal
                 		switch (senderName)
                 		{
@@ -147,7 +149,7 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
 
                 case ACLMessage.FAILURE:
                     //Agent couldn't find something with give properties
-                	myAgent.windowsForm.AddTextLine(stringToDisplayReceive + "[REFUSE]");
+                	myAgent.windowsForm.AddTextLine(stringToDisplayReceive + "[FAILURE]");
                     
                     //The trip won't be good because something is bad
                     myAgent.trip.setCorrupted(true);
@@ -171,11 +173,6 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
             			default:
             				break;
             		}
-                	
-                  //Check if the trip is complete then print it
-                    myAgent.state++;
-                    myAgent.checkTrip();
-
 
                     //Send message to say "ok, shutdown"
                 	
@@ -189,7 +186,7 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
                 	String mess = "[REFUSE]";
                 	
                 	if(myAgent.request.flexible.equals("true")){
-                		if(Math.random() >= 0.8){
+                		if(Math.random() >= 0.2){
                 			try {
                     			Date[] newDate = (Date[]) message.getContentObject();
                     			myAgent.request.dateBegin = newDate[0];
@@ -205,7 +202,7 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
                 	}
                 	
                 	//Say that agree or REFUSE
-                	myAgent.windowsForm.AddTextLine(GlobalCounter.Get() + " Sending to sender" + senderAID.getLocalName() + " message: " + mess);
+                	myAgent.windowsForm.AddTextLine(GlobalCounter.Get() + " Sending to " + senderAID.getLocalName() + " message: " + mess);
                 	
                 	reply.addReceiver(senderAID);
                 	myAgent.send(reply);
@@ -227,7 +224,8 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
             block();
         }
     }
-
+//------------------------------------------------------------
+//When the ACLMessage.Failure -> adding a default object to Trip object
 	private void transportFail() {
 		myAgent.trip.setTransportGo(new Transport("Not Found", "Iasi", myAgent.request.city, myAgent.request.dateBegin, -1, 0));
 		myAgent.trip.setTransportBack(new Transport("Not Found", myAgent.request.city, "Iasi", myAgent.request.dateEnd, -1, 0));		
@@ -323,7 +321,7 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
 		
 		toSend.addReceiver(senderAID);
 
-        myAgent.windowsForm.AddTextLine(GlobalCounter.Get() + " Sending to sender" + senderAID.getLocalName() + " message: [ACCEPT_PROPOSAL]");
+        myAgent.windowsForm.AddTextLine(GlobalCounter.Get() + " Sending to " + senderAID.getLocalName() + " message: [ACCEPT_PROPOSAL]");
         myAgent.send(toSend);
         
         //One proposition is accepted and added to the trip
@@ -336,13 +334,16 @@ public class MessageReceivePersonnalAgent extends CyclicBehaviour
 		ACLMessage toSend = new ACLMessage(ACLMessage.REJECT_PROPOSAL);
 		
 		toSend.addReceiver(senderAID);
+		
+		try {
+        	toSend.setContentObject(myAgent.request);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-        myAgent.windowsForm.AddTextLine(GlobalCounter.Get() + " Sending to sender" + senderAID.getLocalName() + " message: [REJECT_PROPOSAL]");
+        myAgent.windowsForm.AddTextLine(GlobalCounter.Get() + " Sending to " + senderAID.getLocalName() + " message: [REJECT_PROPOSAL]");
         myAgent.send(toSend);
-        
-        //One proposition is accepted and added to the trip
-        //Increase the state of principalAgent
-        myAgent.state++;
 		
 	}
 }

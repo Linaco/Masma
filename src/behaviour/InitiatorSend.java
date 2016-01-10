@@ -1,5 +1,9 @@
-
 package behaviour;
+/**
+ * @author Linaco
+ * 
+ * When agent is started, send an inform message to personnalAgent to inform it that agent is living
+ */
 
 import java.io.IOException;
 

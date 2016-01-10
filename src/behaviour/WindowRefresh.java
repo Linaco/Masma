@@ -1,4 +1,7 @@
 package behaviour;
+/**
+ * Agent to refresh the windows of the agent
+ */
 
 import agents.WorkingAgent;
 import jade.core.Agent;
